@@ -65,7 +65,6 @@ namespace kliniek.Data
                 MessageBox.Show($"خطأ في التحميل: {ex.Message}");
             }
         }
-
     }
     public class SaveData
     {
