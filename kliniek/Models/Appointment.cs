@@ -13,7 +13,7 @@ namespace kliniek.Models
         public DateTime Date_ { get; set; }
         public string Status { get; set; }
 
-        public Appointment(string doctorUserName, string patientUserName, DateTime date,string status) 
+        public Appointment(string doctorUserName, string patientUserName, DateTime date) 
         {
 
             DoctorUserName = doctorUserName;

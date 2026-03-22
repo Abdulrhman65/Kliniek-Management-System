@@ -296,8 +296,8 @@ namespace kliniek.Forms
                 Appointment newApp = new Appointment(
                     doctorUserName,
                     patient_data.LoggedInPatient.UserName,
-                    selectedDateTime,
-                    "lol"
+                    selectedDateTime
+                    
                 );
 
                 patient_data.appointments.Add(newApp);
