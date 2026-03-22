@@ -22,6 +22,8 @@ namespace kliniek.Forms
             InitializeComponent();
             //load patient data
             patient_data = Data;
+            //remove the appointment passed
+            patient_data.appointments.RemoveAll(app => app.Date_ < DateTime.Now);
         }
 
 
@@ -34,6 +36,7 @@ namespace kliniek.Forms
 
         }
 
+        //main menu
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
 
@@ -41,6 +44,7 @@ namespace kliniek.Forms
             flowLayoutPanel1.Location = new Point(167, 186);
             flowLayoutPanel1.Size = new Size(1200, 1012);
             flowLayoutPanel1.Controls.Clear();
+            //the date label
             label2.Visible = true;
             LoadAppointments();
         }
@@ -53,10 +57,13 @@ namespace kliniek.Forms
         }
 
 
+        //loading the appointment in the main menu
         private void LoadAppointments()
         {
+
             var data = Program.SharedData;
 
+            //loading the current user's appointment only
             var myAppointments = data.appointments.Where(a =>
                 a.PatientUserName == data.LoggedInPatient.UserName
             ).ToList();
@@ -65,6 +72,7 @@ namespace kliniek.Forms
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.WrapContents = true;
             flowLayoutPanel1.AutoScroll = true;
+            //displaing the app
             foreach (var a in myAppointments)
             {
 
@@ -130,6 +138,7 @@ namespace kliniek.Forms
             }
         }
 
+        // the reservation tab 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             flowLayoutPanel1.Controls.Clear();
@@ -252,6 +261,12 @@ namespace kliniek.Forms
                     return;
                 }
                 DateTime selectedDateTime = dateTimePicker1.Value.Date.Add(DateTime.Parse(comboBox3.SelectedItem.ToString()).TimeOfDay);
+                if (selectedDateTime < DateTime.Now)
+                {
+                    MessageBox.Show("من فضلك اختر توقيت صحيح");
+                    return;
+
+                }
 
                 if (comboBox2.SelectedIndex == 0 || comboBox2.SelectedItem == null)
                 {
@@ -292,14 +307,13 @@ namespace kliniek.Forms
                 }
 
 
-
+                //creating the appointment
                 Appointment newApp = new Appointment(
                     doctorUserName,
                     patient_data.LoggedInPatient.UserName,
                     selectedDateTime
-                    
                 );
-
+                //saving 
                 patient_data.appointments.Add(newApp);
                 patient_data.Save();
 
@@ -317,6 +331,7 @@ namespace kliniek.Forms
 
         }
 
+        //logout button 
         private void button1_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("هل تريد تسجيل الخروج؟", "تأكيد", MessageBoxButtons.YesNo);
@@ -332,6 +347,8 @@ namespace kliniek.Forms
             }
         }
 
+
+        //deleting the account button
         private void button2_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("هل تريد مسح الحساب ؟", "تأكيد", MessageBoxButtons.YesNo);

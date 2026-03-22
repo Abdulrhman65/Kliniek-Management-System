@@ -19,7 +19,7 @@ namespace kliniek.Models
             DoctorUserName = doctorUserName;
             PatientUserName = patientUserName;
             Date_ = date;
-            Status = status;
+            
         }
     }
     
