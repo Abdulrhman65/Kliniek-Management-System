@@ -67,7 +67,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(15, 23, 42);
+            panel1.BackColor = Color.FromArgb(13, 17, 23);
             panel1.Controls.Add(DoctorCode);
             panel1.Controls.Add(label15);
             panel1.Controls.Add(label14);
