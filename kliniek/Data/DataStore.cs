@@ -29,6 +29,7 @@ namespace kliniek.Data
             "أنف وأذن وحنجرة","المخ والأعصاب",
             "الطب النفسي", "المسالك البولية",
         ];
+        public List<string> time = [
 
         public List<string> time = [
 
