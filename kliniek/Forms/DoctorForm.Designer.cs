@@ -30,7 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DoctorForm));
             panel1 = new Panel();
-            button2 = new Button();
+            radioButton4 = new RadioButton();
+            DeleteAcc = new Button();
             button1 = new Button();
             radioButton1 = new RadioButton();
             radioButton2 = new RadioButton();
@@ -62,6 +63,9 @@
             panelPrescriptions = new Panel();
             flowLayoutPanelPrescriptions = new FlowLayoutPanel();
             lblPrescTitle = new Label();
+            panel5 = new Panel();
+            flowLayoutPanel3 = new FlowLayoutPanel();
+            label6 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel4.SuspendLayout();
@@ -72,12 +76,14 @@
             panel10.SuspendLayout();
             panel15.SuspendLayout();
             panelPrescriptions.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(21, 32, 43);
-            panel1.Controls.Add(button2);
+            panel1.Controls.Add(radioButton4);
+            panel1.Controls.Add(DeleteAcc);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(radioButton1);
             panel1.Controls.Add(radioButton2);
@@ -91,26 +97,44 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(269, 780);
             panel1.TabIndex = 0;
-            panel1.Paint += Panel1_Paint;
             // 
-            // button2
+            // radioButton4
             // 
-            button2.AutoSize = true;
-            button2.FlatAppearance.BorderColor = Color.Gray;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(33, 33, 33);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.Firebrick;
-            button2.Location = new Point(19, 704);
-            button2.Name = "button2";
-            button2.RightToLeft = RightToLeft.Yes;
-            button2.Size = new Size(233, 42);
-            button2.TabIndex = 10;
-            button2.Text = "حذف الحساب   🗑️";
-            button2.TextAlign = ContentAlignment.MiddleRight;
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            radioButton4.Appearance = Appearance.Button;
+            radioButton4.FlatAppearance.BorderColor = Color.Gray;
+            radioButton4.FlatAppearance.BorderSize = 0;
+            radioButton4.FlatAppearance.CheckedBackColor = Color.FromArgb(37, 99, 235);
+            radioButton4.FlatStyle = FlatStyle.Flat;
+            radioButton4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            radioButton4.ForeColor = Color.White;
+            radioButton4.ImageAlign = ContentAlignment.MiddleLeft;
+            radioButton4.Location = new Point(19, 338);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(233, 45);
+            radioButton4.TabIndex = 12;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "📨   سجل المواعيد";
+            radioButton4.UseVisualStyleBackColor = true;
+            radioButton4.CheckedChanged += RadioButton4_CheckedChanged;
+            // 
+            // DeleteAcc
+            // 
+            DeleteAcc.AutoSize = true;
+            DeleteAcc.FlatAppearance.BorderColor = Color.Gray;
+            DeleteAcc.FlatAppearance.BorderSize = 0;
+            DeleteAcc.FlatAppearance.MouseDownBackColor = Color.FromArgb(33, 33, 33);
+            DeleteAcc.FlatStyle = FlatStyle.Flat;
+            DeleteAcc.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            DeleteAcc.ForeColor = Color.Firebrick;
+            DeleteAcc.Location = new Point(19, 704);
+            DeleteAcc.Name = "DeleteAcc";
+            DeleteAcc.RightToLeft = RightToLeft.Yes;
+            DeleteAcc.Size = new Size(233, 42);
+            DeleteAcc.TabIndex = 10;
+            DeleteAcc.Text = "حذف الحساب   🗑️";
+            DeleteAcc.TextAlign = ContentAlignment.MiddleRight;
+            DeleteAcc.UseVisualStyleBackColor = true;
+            DeleteAcc.Click += DeleteAcc_Click;
             // 
             // button1
             // 
@@ -192,7 +216,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.FromArgb(148, 163, 184);
-            label2.Location = new Point(176, 124);
+            label2.Location = new Point(19, 124);
             label2.Name = "label2";
             label2.Size = new Size(76, 23);
             label2.TabIndex = 4;
@@ -203,7 +227,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(241, 245, 249);
-            label1.Location = new Point(149, 86);
+            label1.Location = new Point(19, 99);
             label1.Name = "label1";
             label1.Size = new Size(103, 25);
             label1.TabIndex = 1;
@@ -256,10 +280,10 @@
             // 
             flowLayoutPanel2.BackColor = Color.FromArgb(21, 32, 43);
             flowLayoutPanel2.Controls.Add(label10);
-            flowLayoutPanel2.Location = new Point(109, 412);
+            flowLayoutPanel2.Location = new Point(109, 315);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Padding = new Padding(0, 10, 0, 0);
-            flowLayoutPanel2.Size = new Size(982, 316);
+            flowLayoutPanel2.Size = new Size(982, 413);
             flowLayoutPanel2.TabIndex = 4;
             // 
             // label10
@@ -294,16 +318,15 @@
             label3.Size = new Size(91, 31);
             label3.TabIndex = 0;
             label3.Text = "الرئيسية";
-            label3.Click += Label3_Click;
             // 
             // panel8
             // 
             panel8.BackColor = Color.FromArgb(21, 32, 43);
             panel8.Controls.Add(label5);
             panel8.Controls.Add(lblTodayAppts);
-            panel8.Location = new Point(646, 112);
+            panel8.Location = new Point(762, 112);
             panel8.Name = "panel8";
-            panel8.Size = new Size(445, 169);
+            panel8.Size = new Size(329, 169);
             panel8.TabIndex = 2;
             // 
             // label5
@@ -322,7 +345,7 @@
             lblTodayAppts.AutoSize = true;
             lblTodayAppts.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTodayAppts.ForeColor = Color.FromArgb(37, 99, 235);
-            lblTodayAppts.Location = new Point(196, 67);
+            lblTodayAppts.Location = new Point(127, 67);
             lblTodayAppts.Name = "lblTodayAppts";
             lblTodayAppts.Size = new Size(34, 46);
             lblTodayAppts.TabIndex = 6;
@@ -335,7 +358,7 @@
             panel6.Controls.Add(lblPatientsCount);
             panel6.Location = new Point(109, 112);
             panel6.Name = "panel6";
-            panel6.Size = new Size(445, 169);
+            panel6.Size = new Size(322, 169);
             panel6.TabIndex = 1;
             // 
             // label11
@@ -354,7 +377,7 @@
             lblPatientsCount.AutoSize = true;
             lblPatientsCount.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblPatientsCount.ForeColor = Color.White;
-            lblPatientsCount.Location = new Point(192, 67);
+            lblPatientsCount.Location = new Point(146, 67);
             lblPatientsCount.Name = "lblPatientsCount";
             lblPatientsCount.Size = new Size(34, 46);
             lblPatientsCount.TabIndex = 0;
@@ -366,9 +389,9 @@
             panelWeekPresc.BackColor = Color.FromArgb(21, 32, 43);
             panelWeekPresc.Controls.Add(lblWeekPrescTitle);
             panelWeekPresc.Controls.Add(lblWeekPresc);
-            panelWeekPresc.Location = new Point(109, 322);
+            panelWeekPresc.Location = new Point(437, 112);
             panelWeekPresc.Name = "panelWeekPresc";
-            panelWeekPresc.Size = new Size(982, 80);
+            panelWeekPresc.Size = new Size(319, 169);
             panelWeekPresc.TabIndex = 8;
             // 
             // lblWeekPrescTitle
@@ -378,7 +401,7 @@
             lblWeekPrescTitle.ForeColor = Color.Gray;
             lblWeekPrescTitle.Location = new Point(0, 0);
             lblWeekPrescTitle.Name = "lblWeekPrescTitle";
-            lblWeekPrescTitle.Size = new Size(130, 23);
+            lblWeekPrescTitle.Size = new Size(152, 23);
             lblWeekPrescTitle.TabIndex = 0;
             lblWeekPrescTitle.Text = "روشتات هذا الأسبوع";
             // 
@@ -387,7 +410,7 @@
             lblWeekPresc.AutoSize = true;
             lblWeekPresc.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblWeekPresc.ForeColor = Color.FromArgb(106, 191, 106);
-            lblWeekPresc.Location = new Point(440, 20);
+            lblWeekPresc.Location = new Point(127, 67);
             lblWeekPresc.Name = "lblWeekPresc";
             lblWeekPresc.Size = new Size(34, 46);
             lblWeekPresc.TabIndex = 1;
@@ -464,11 +487,11 @@
             flowLayoutPanelPrescriptions.AutoScroll = true;
             flowLayoutPanelPrescriptions.BackColor = Color.FromArgb(13, 17, 23);
             flowLayoutPanelPrescriptions.FlowDirection = FlowDirection.TopDown;
-            flowLayoutPanelPrescriptions.WrapContents = false;
             flowLayoutPanelPrescriptions.Location = new Point(86, 80);
             flowLayoutPanelPrescriptions.Name = "flowLayoutPanelPrescriptions";
             flowLayoutPanelPrescriptions.Size = new Size(1005, 620);
             flowLayoutPanelPrescriptions.TabIndex = 1;
+            flowLayoutPanelPrescriptions.WrapContents = false;
             // 
             // lblPrescTitle
             // 
@@ -477,9 +500,42 @@
             lblPrescTitle.ForeColor = Color.FromArgb(241, 245, 249);
             lblPrescTitle.Location = new Point(48, 22);
             lblPrescTitle.Name = "lblPrescTitle";
-            lblPrescTitle.Size = new Size(142, 31);
+            lblPrescTitle.Size = new Size(159, 31);
             lblPrescTitle.TabIndex = 0;
             lblPrescTitle.Text = "قائمة الروشتات";
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.FromArgb(13, 17, 23);
+            panel5.Controls.Add(flowLayoutPanel3);
+            panel5.Controls.Add(label6);
+            panel5.Location = new Point(251, -1);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(1189, 787);
+            panel5.TabIndex = 6;
+            panel5.Visible = false;
+            // 
+            // flowLayoutPanel3
+            // 
+            flowLayoutPanel3.AutoScroll = true;
+            flowLayoutPanel3.BackColor = Color.FromArgb(13, 17, 23);
+            flowLayoutPanel3.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel3.Location = new Point(86, 80);
+            flowLayoutPanel3.Name = "flowLayoutPanel3";
+            flowLayoutPanel3.Size = new Size(1005, 620);
+            flowLayoutPanel3.TabIndex = 1;
+            flowLayoutPanel3.WrapContents = false;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.FromArgb(241, 245, 249);
+            label6.Location = new Point(86, 22);
+            label6.Name = "label6";
+            label6.Size = new Size(145, 31);
+            label6.TabIndex = 0;
+            label6.Text = "سجل المواعيد";
             // 
             // DoctorForm
             // 
@@ -489,6 +545,7 @@
             Controls.Add(panel1);
             Controls.Add(panel4);
             Controls.Add(panel10);
+            Controls.Add(panel5);
             Controls.Add(panelPrescriptions);
             MaximizeBox = false;
             MaximumSize = new Size(1445, 814);
@@ -498,7 +555,6 @@
             Text = "لوحة تحكم الطبيب";
             FormClosed += DoctorForm_FormClosed;
             Load += DoctorForm_Load;
-            SizeChanged += DoctorForm_SizeChanged;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -510,14 +566,16 @@
             panel8.PerformLayout();
             panel6.ResumeLayout(false);
             panel6.PerformLayout();
+            panelWeekPresc.ResumeLayout(false);
+            panelWeekPresc.PerformLayout();
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             panel15.ResumeLayout(false);
             panel15.PerformLayout();
-            panelWeekPresc.ResumeLayout(false);
-            panelWeekPresc.PerformLayout();
             panelPrescriptions.ResumeLayout(false);
             panelPrescriptions.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -548,7 +606,7 @@
         private Panel panel15;
         private FlowLayoutPanel flowLayoutPanel1;
         private FlowLayoutPanel flowLayoutPanel2;
-        private Button button2;
+        private Button DeleteAcc;
         private RadioButton radioButton3;
         private Panel panelWeekPresc;
         private Label lblWeekPrescTitle;
@@ -556,5 +614,9 @@
         private Panel panelPrescriptions;
         private FlowLayoutPanel flowLayoutPanelPrescriptions;
         private Label lblPrescTitle;
+        private RadioButton radioButton4;
+        private Panel panel5;
+        private FlowLayoutPanel flowLayoutPanel3;
+        private Label label6;
     }
 }

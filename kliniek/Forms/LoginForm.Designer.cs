@@ -134,11 +134,11 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(163, 171);
+            label1.Location = new Point(153, 171);
             label1.Name = "label1";
-            label1.Size = new Size(88, 38);
+            label1.Size = new Size(107, 38);
             label1.TabIndex = 0;
-            label1.Text = "Clinic";
+            label1.Text = "Kliniek";
             // 
             // panel2
             // 
@@ -335,6 +335,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "تسجيل الدخول";
             FormClosed += LoginForm_FormClosed;
+            Load += LoginForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

@@ -21,24 +21,24 @@ namespace kliniek.Forms
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtMedications.Text))
-            {
-                MessageBox.Show("برجاء كتابة الأدوية", "تنبيه", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var docUsername = Program.SharedData.LogedInDoc?.username;
-            if (docUsername == null)
-            {
-                MessageBox.Show("خطأ: لم يتم التعرف على الطبيب", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             btnSave.Enabled = false;
+            var originalBtnText = btnSave.Text;
             btnSave.Text = "جاري الحفظ...";
 
             try
             {
+
+                var docUsername = Program.SharedData.LogedInDoc?.username;
+                if (string.IsNullOrEmpty(docUsername))
+                {
+                    MessageBox.Show("جلسة الطبيب منتهية. يرجى تسجيل الدخول مرة أخرى.", "تنبيه",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.DialogResult = DialogResult.Abort;
+                    this.Close();
+                    return;
+                }
+
                 var prescription = new Prescription(
                     docUsername,
                     _patient.username,
@@ -47,18 +47,27 @@ namespace kliniek.Forms
                     txtNotes.Text.Trim()
                 );
 
+
                 await Program.SharedData.SavePrescription(prescription);
-                Program.SharedData.prescriptions.Add(prescription);
+
+                Program.SharedData.prescriptions?.Add(prescription);
 
                 MessageBox.Show("تم حفظ الروشتة بنجاح ✅", "نجاح", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"خطأ في حفظ الروشتة: {ex.Message}", "خطأ", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                btnSave.Enabled = true;
-                btnSave.Text = "💾 حفظ الروشتة";
+                MessageBox.Show($"حدث خطأ أثناء الاتصال بالخادم: {ex.Message}", "خطأ في النظام", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (!this.IsDisposed && !this.Disposing)
+                {
+                    btnSave.Enabled = true;
+                    btnSave.Text = originalBtnText;
+                }
             }
         }
     }

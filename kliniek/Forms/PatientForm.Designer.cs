@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientForm));
             panel1 = new Panel();
+            radioButton2 = new RadioButton();
             button2 = new Button();
             button1 = new Button();
             radioButton1 = new RadioButton();
@@ -52,16 +53,21 @@
             dateTimePicker1 = new DateTimePicker();
             comboBox2 = new ComboBox();
             comboBox1 = new ComboBox();
+            panelPrescriptions = new Panel();
+            flowLayoutPanelPrescriptions = new FlowLayoutPanel();
+            lblPrescTitle = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel10.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
+            panelPrescriptions.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(21, 32, 43);
+            panel1.Controls.Add(radioButton2);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(radioButton1);
@@ -77,6 +83,25 @@
             panel1.Size = new Size(269, 780);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
+            // 
+            // radioButton2
+            // 
+            radioButton2.Appearance = Appearance.Button;
+            radioButton2.FlatAppearance.BorderColor = Color.Gray;
+            radioButton2.FlatAppearance.BorderSize = 0;
+            radioButton2.FlatAppearance.CheckedBackColor = Color.FromArgb(37, 99, 235);
+            radioButton2.FlatStyle = FlatStyle.Flat;
+            radioButton2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            radioButton2.ForeColor = Color.White;
+            radioButton2.ImageAlign = ContentAlignment.MiddleLeft;
+            radioButton2.Location = new Point(19, 251);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(233, 45);
+            radioButton2.TabIndex = 12;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "📝    الروشتات";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
             // 
             // button2
             // 
@@ -156,7 +181,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(142, 87);
+            label1.Location = new Point(19, 96);
             label1.Name = "label1";
             label1.Size = new Size(110, 25);
             label1.TabIndex = 1;
@@ -338,6 +363,40 @@
             comboBox1.TabIndex = 0;
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged_1;
             // 
+            // panelPrescriptions
+            // 
+            panelPrescriptions.BackColor = Color.FromArgb(13, 17, 23);
+            panelPrescriptions.Controls.Add(flowLayoutPanelPrescriptions);
+            panelPrescriptions.Controls.Add(lblPrescTitle);
+            panelPrescriptions.Location = new Point(251, -1);
+            panelPrescriptions.Name = "panelPrescriptions";
+            panelPrescriptions.Size = new Size(1189, 787);
+            panelPrescriptions.TabIndex = 7;
+            panelPrescriptions.Visible = false;
+            panelPrescriptions.Paint += panelPrescriptions_Paint;
+            // 
+            // flowLayoutPanelPrescriptions
+            // 
+            flowLayoutPanelPrescriptions.AutoScroll = true;
+            flowLayoutPanelPrescriptions.BackColor = Color.FromArgb(13, 17, 23);
+            flowLayoutPanelPrescriptions.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelPrescriptions.Location = new Point(86, 80);
+            flowLayoutPanelPrescriptions.Name = "flowLayoutPanelPrescriptions";
+            flowLayoutPanelPrescriptions.Size = new Size(1005, 620);
+            flowLayoutPanelPrescriptions.TabIndex = 1;
+            flowLayoutPanelPrescriptions.WrapContents = false;
+            // 
+            // lblPrescTitle
+            // 
+            lblPrescTitle.AutoSize = true;
+            lblPrescTitle.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPrescTitle.ForeColor = Color.FromArgb(241, 245, 249);
+            lblPrescTitle.Location = new Point(48, 22);
+            lblPrescTitle.Name = "lblPrescTitle";
+            lblPrescTitle.Size = new Size(159, 31);
+            lblPrescTitle.TabIndex = 0;
+            lblPrescTitle.Text = "قائمة الروشتات";
+            // 
             // PatientForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -346,6 +405,7 @@
             Controls.Add(panel1);
             Controls.Add(panel4);
             Controls.Add(panel10);
+            Controls.Add(panelPrescriptions);
             Margin = new Padding(2);
             MaximumSize = new Size(1445, 814);
             MinimumSize = new Size(1445, 814);
@@ -362,6 +422,8 @@
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             panel5.ResumeLayout(false);
+            panelPrescriptions.ResumeLayout(false);
+            panelPrescriptions.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -389,5 +451,9 @@
         private DateTimePicker dateTimePicker1;
         private ComboBox comboBox3;
         private Button Ok;
+        private Panel panelPrescriptions;
+        private FlowLayoutPanel flowLayoutPanelPrescriptions;
+        private Label lblPrescTitle;
+        private RadioButton radioButton2;
     }
 }

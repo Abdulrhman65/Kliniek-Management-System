@@ -1,5 +1,6 @@
 ﻿using kliniek.Models;
 using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace kliniek.Forms
@@ -52,50 +53,32 @@ namespace kliniek.Forms
 
         }
 
-        private void Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-
-        }
         bool logO;
         private void Button1_Click(object sender, EventArgs e)
         {
+            Program.SharedData.LogedInDoc = null;
             logO = true;
-            new LoginForm().Show();
             this.Close();
         }
 
-        private void DoctorForm_SizeChanged(object sender, EventArgs e)
-        {
-            panel1.Height = this.Height;
-        }
-
-        private void Label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Panel9_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
         private void LoadTodayAppointments()
         {
-            flowLayoutPanel2.Controls.Clear();
+            ClearPanel(flowLayoutPanel2);
             Data.DataStore data = Program.SharedData;
 
             var todayAppts = data.appointments
                 .Where(a =>
                     a.doctorusername == Program.SharedData.LogedInDoc?.username &&
                     a.date.Date == DateTime.Today)
-                .Take(7)
+                .Take(5)
                 .ToList();
-
+            
             foreach (var appt in todayAppts)
             {
                 var patient = data.patient
                     .FirstOrDefault(p => p.username == appt.patientusername);
 
+                
                 Panel card = new()
                 {
                     Width = flowLayoutPanel2.Width - 40,
@@ -127,10 +110,37 @@ namespace kliniek.Forms
                     Text = appt.status,
                     AutoSize = true,
                     Font = new Font("Segoe UI", 9),
-                    Location = new Point(card.Width - 90, 20)
+                    Location = new Point(card.Width - 500, 23)
                 };
 
-                if (appt.status == "مؤكد")
+                Button btnCancel = new()
+                {
+                    Text = "إلغاء الحجز",
+                    BackColor = Color.FromArgb(74, 26, 26),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat,
+                    Width = 100,
+                    Height = 35,
+                    Location = new Point(card.Width - 110, 16),
+                    Font = new Font("Segoe UI", 9),
+                };
+                btnCancel.FlatAppearance.BorderSize = 0;
+                if (appt.status == "ملغي"  || appt.status == "انتهى")
+                {
+                    btnCancel.Enabled = false;
+                }
+
+                btnCancel.Click += async (s, e) =>
+                {
+                    var result = MessageBox.Show("هل تريد إلغاء الموعد؟", "تأكيد", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        appt.status = "ملغي";
+                        await data.SaveAppointment(appt);
+                        LoadTodayAppointments();
+                    }
+                };
+                if (appt.status == "انتهى")
                 {
                     lblStatus.ForeColor = Color.FromArgb(106, 191, 106);
                     lblStatus.BackColor = Color.FromArgb(26, 61, 26);
@@ -146,10 +156,11 @@ namespace kliniek.Forms
                     lblStatus.BackColor = Color.FromArgb(74, 26, 26);
                 }
 
-                card.Controls.AddRange([lblName, lblTime, lblStatus]);
+                card.Controls.AddRange([lblName, lblTime, lblStatus, btnCancel]);
                 flowLayoutPanel2.Controls.Add(card);
             }
         }
+       
         // زهجججججججججججججججججججججت
         private void Label6_Click(object sender, EventArgs e)
         {
@@ -171,19 +182,9 @@ namespace kliniek.Forms
             LoadPatients(filtered);
         }
 
-        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void LoadPatients(List<Patient>? list = null)
         {
-            flowLayoutPanel1.Controls.Clear();
+            ClearPanel(flowLayoutPanel1);
             Data.DataStore data = Program.SharedData;
 
             // جيب المرضى الخاصين بالدكتور دعع بس
@@ -235,25 +236,9 @@ namespace kliniek.Forms
                 };
                 btnView.FlatAppearance.BorderSize = 0;
 
-                //Button btnDelete = new()
-                //{
-                //    Text = "حذف",
-                //    Width = 80,
-                //    Height = 28,
-                //    Location = new Point(100, 85),
-                //    BackColor = Color.FromArgb(74, 26, 26),
-                //    ForeColor = Color.FromArgb(255, 107, 107),
-                //    FlatStyle = FlatStyle.Flat,
-                //    Font = new Font("Segoe UI", 9)
-                //};
-                //btnDelete.FlatAppearance.BorderSize = 0;
+                
                 var patient = p;
-                //btnDelete.Click += async (s, e) =>
-                //{
-                //    data.patient.Remove(patient);
-                //    await data.DeleteApp();
-                //    LoadPatients();
-                //};
+               
                 btnView.Click += (s, e) =>
                 {
                     new PatientDetailsForm(patient).ShowDialog();
@@ -264,31 +249,15 @@ namespace kliniek.Forms
             }
         }
 
-        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            panel4.Visible = false;
-            panel10.Visible = true;
-            panelPrescriptions.Visible = false;
-        }
+        private void RadioButton2_CheckedChanged(object sender, EventArgs e){ panel4.Visible = false; panel5.Visible = false; panel10.Visible = true; panelPrescriptions.Visible = false;}
 
-        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            panel4.Visible = true;
-            panel10.Visible = false;
-            panelPrescriptions.Visible = false;
-        }
+        private void RadioButton1_CheckedChanged(object sender, EventArgs e){ panel4.Visible = true; panel5.Visible = false; panel10.Visible = false; panelPrescriptions.Visible = false; }
 
-        private void RadioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            panel4.Visible = false;
-            panel10.Visible = false;
-            panelPrescriptions.Visible = true;
-            LoadPrescriptions();
-        }
-
+        private void RadioButton3_CheckedChanged(object sender, EventArgs e){ panel4.Visible = false;panel5.Visible = false; panel10.Visible = false;panelPrescriptions.Visible = true; LoadPrescriptions(); }
+        private void RadioButton4_CheckedChanged(object sender, EventArgs e){ panel4.Visible = false;panel5.Visible = true;panel10.Visible = false;panelPrescriptions.Visible = false; Loadappo();}
         private void LoadPrescriptions()
         {
-            flowLayoutPanelPrescriptions.Controls.Clear();
+            ClearPanel(flowLayoutPanelPrescriptions);
             Data.DataStore data = Program.SharedData;
 
             var myPrescriptions = data.prescriptions
@@ -320,7 +289,9 @@ namespace kliniek.Forms
                     Height = 120,
                     BackColor = Color.FromArgb(21, 32, 43),
                     Margin = new Padding(10, 5, 10, 5),
-                    Padding = new Padding(15)
+                    Padding = new Padding(18),
+                    AutoScroll = true,
+
                 };
 
                 Label lblName = new()
@@ -370,12 +341,7 @@ namespace kliniek.Forms
             else Application.Exit();
         }
 
-        private void Label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void button2_Click(object sender, EventArgs e)
+        private async void DeleteAcc_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("هل أنت متأكد من حذف الحساب؟", "تأكيد", MessageBoxButtons.YesNo);
 
@@ -390,6 +356,78 @@ namespace kliniek.Forms
                     if (logO) this.Close();
                 }
             }
+        }
+
+       
+        private void Loadappo()
+        {
+            ClearPanel(flowLayoutPanel3);
+            Data.DataStore data = Program.SharedData;
+
+            var myappointments = data.appointments
+                .Where(p => p.doctorusername == data.LogedInDoc?.username)
+                .OrderByDescending(p => p.date)
+                .ToList();
+
+            if (myappointments.Count == 0)
+            {
+                Label lblEmpty = new()
+                {
+                    Text = "لا توجد حجوزات بعد",
+                    ForeColor = Color.Gray,
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    AutoSize = true,
+                    Margin = new Padding(20)
+                };
+                flowLayoutPanel3.Controls.Add(lblEmpty);
+                return;
+            }
+            flowLayoutPanel3.AutoScroll = true;
+            foreach (var presc in myappointments)
+            {
+                var patient = data.patient.FirstOrDefault(p => p.username == presc.patientusername);
+
+                Panel card = new()
+                {
+                    Width = flowLayoutPanel3.Width - 20,
+                    Height = 80,
+                    BackColor = Color.FromArgb(21, 32, 43),
+                    Margin = new Padding(10, 5, 10, 5),
+                    Padding = new Padding(20),
+                    
+                };
+
+                Label lblName = new()
+                {
+                    Text = "👤 " + (patient?.fullname ?? "غير معروف"),
+                    ForeColor = Color.FromArgb(37, 99, 235),
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    AutoSize = true,
+                    Location = new Point(15, 10)
+                };
+
+                Label lblDate = new()
+                {
+                    Text = presc.date.ToString("dd/MM/yyyy hh:mm tt"),
+                    ForeColor = Color.FromArgb(148, 163, 184),
+                    Font = new Font("Segoe UI", 9),
+                    AutoSize = true,
+                    Location = new Point(15, 38)
+                };
+
+                card.Controls.AddRange([lblName, lblDate]);
+                flowLayoutPanel3.Controls.Add(card);
+            }
+        }
+
+        private void ClearPanel(Panel panel)
+        {
+            foreach (Control ctrl in panel.Controls)
+            {
+                ctrl.Click -= null; // فصل الأحداث لو ممكن
+                ctrl.Dispose();     // تحرير الموارد
+            }
+            panel.Controls.Clear();
         }
     }
 }

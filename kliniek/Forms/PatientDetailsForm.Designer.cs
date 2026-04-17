@@ -35,6 +35,9 @@
             pictureBox1 = new PictureBox();
             panel2 = new Panel();
             button1 = new Button();
+            btnPrescription = new Button();
+            panelLastPresc = new Panel();
+            lblLastPresc = new Label();
             panel7 = new Panel();
             lblLastAppt = new Label();
             panel4 = new Panel();
@@ -52,15 +55,12 @@
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
+            panelLastPresc.SuspendLayout();
             panel7.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
             panel3.SuspendLayout();
-            panelLastPresc = new Panel();
-            lblLastPresc = new Label();
-            btnPrescription = new Button();
-            panelLastPresc.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -138,7 +138,42 @@
             button1.TabIndex = 3;
             button1.Text = "خروج";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += Button1_Click;
+            // 
+            // btnPrescription
+            // 
+            btnPrescription.BackColor = Color.FromArgb(37, 99, 235);
+            btnPrescription.FlatAppearance.BorderSize = 0;
+            btnPrescription.FlatStyle = FlatStyle.Flat;
+            btnPrescription.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPrescription.ForeColor = Color.White;
+            btnPrescription.Location = new Point(32, 560);
+            btnPrescription.Name = "btnPrescription";
+            btnPrescription.Size = new Size(515, 50);
+            btnPrescription.TabIndex = 4;
+            btnPrescription.Text = "📝 كتابة روشتة";
+            btnPrescription.UseVisualStyleBackColor = false;
+            btnPrescription.Click += btnPrescription_Click;
+            // 
+            // panelLastPresc
+            // 
+            panelLastPresc.BackColor = Color.FromArgb(21, 32, 43);
+            panelLastPresc.Controls.Add(lblLastPresc);
+            panelLastPresc.Location = new Point(32, 445);
+            panelLastPresc.Name = "panelLastPresc";
+            panelLastPresc.Size = new Size(515, 105);
+            panelLastPresc.TabIndex = 5;
+            // 
+            // lblLastPresc
+            // 
+            lblLastPresc.AutoSize = true;
+            lblLastPresc.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblLastPresc.ForeColor = Color.FromArgb(106, 191, 106);
+            lblLastPresc.Location = new Point(153, 48);
+            lblLastPresc.Name = "lblLastPresc";
+            lblLastPresc.Size = new Size(52, 25);
+            lblLastPresc.TabIndex = 0;
+            lblLastPresc.Text = "........";
             // 
             // panel7
             // 
@@ -155,7 +190,7 @@
             lblLastAppt.AutoSize = true;
             lblLastAppt.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblLastAppt.ForeColor = Color.White;
-            lblLastAppt.Location = new Point(120, 36);
+            lblLastAppt.Location = new Point(46, 40);
             lblLastAppt.Name = "lblLastAppt";
             lblLastAppt.Size = new Size(62, 31);
             lblLastAppt.TabIndex = 6;
@@ -294,41 +329,6 @@
             lblBlood.TabIndex = 5;
             lblBlood.Text = "........";
             // 
-            // btnPrescription
-            // 
-            btnPrescription.BackColor = Color.FromArgb(37, 99, 235);
-            btnPrescription.FlatAppearance.BorderSize = 0;
-            btnPrescription.FlatStyle = FlatStyle.Flat;
-            btnPrescription.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPrescription.ForeColor = Color.White;
-            btnPrescription.Location = new Point(32, 560);
-            btnPrescription.Name = "btnPrescription";
-            btnPrescription.Size = new Size(515, 50);
-            btnPrescription.TabIndex = 4;
-            btnPrescription.Text = "📝 كتابة روشتة";
-            btnPrescription.UseVisualStyleBackColor = false;
-            btnPrescription.Click += btnPrescription_Click;
-            // 
-            // panelLastPresc
-            // 
-            panelLastPresc.BackColor = Color.FromArgb(21, 32, 43);
-            panelLastPresc.Controls.Add(lblLastPresc);
-            panelLastPresc.Location = new Point(32, 445);
-            panelLastPresc.Name = "panelLastPresc";
-            panelLastPresc.Size = new Size(515, 105);
-            panelLastPresc.TabIndex = 5;
-            // 
-            // lblLastPresc
-            // 
-            lblLastPresc.AutoSize = true;
-            lblLastPresc.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblLastPresc.ForeColor = Color.FromArgb(106, 191, 106);
-            lblLastPresc.Location = new Point(80, 36);
-            lblLastPresc.Name = "lblLastPresc";
-            lblLastPresc.Size = new Size(62, 25);
-            lblLastPresc.TabIndex = 0;
-            lblLastPresc.Text = "........";
-            // 
             // PatientDetailsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -346,6 +346,8 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
+            panelLastPresc.ResumeLayout(false);
+            panelLastPresc.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
             panel4.ResumeLayout(false);
@@ -356,8 +358,6 @@
             panel6.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            panelLastPresc.ResumeLayout(false);
-            panelLastPresc.PerformLayout();
             ResumeLayout(false);
         }
 

@@ -97,7 +97,7 @@ namespace kliniek.Forms
                 else if (foundPatient.password != textBox2.Text)
                 {
                     Program.SharedData.LoggedInPatient = null;
-                    MessageBox.Show("كلمة المرور خاطئة."); 
+                    MessageBox.Show("كلمة المرور خاطئة.");
                 }
                 else
                 {
@@ -168,5 +168,34 @@ namespace kliniek.Forms
 
             }
         }
+
+        private async void LoginForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                this.Text = "جار التحميل...";
+                this.Enabled = false;
+                await Program.SharedData.Load();
+                this.Enabled = true;
+                this.Text = "Kliniek";
+                radioButton1.Checked = true;
+
+                // هنا بعد ما البيانات اتحملت
+                foreach (var item in Program.SharedData.appointments)
+                {
+                    if (item.date < DateTime.Now && item.status == "انتظار")
+                    {
+                        item.status = "انتهى";
+                        await Program.SharedData.SaveAppointment(item);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("خطأ في الاتصال");
+                this.Enabled = true;
+            }
+        }
     }
+    
 }
